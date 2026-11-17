@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DSA in 30 Days</title>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--tx:#1d1d1b;--mut:#6b6b66;--bd:#e3e3de;--ac:#2f6fed;--ok:#1f9d55;--soft:#eaf0fe;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--card:#1e1e22;--tx:#ececea;--mut:#9a9a94;--bd:#2f2f35;--ac:#6b9bff;--ok:#3ecf7a;--soft:#232b3f}}
+:root[data-theme="dark"]{--bg:#141416;--card:#1e1e22;--tx:#ececea;--mut:#9a9a94;--bd:#2f2f35;--ac:#6b9bff;--ok:#3ecf7a;--soft:#232b3f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:920px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:28px;margin:8px 0 4px}
+.sub{color:var(--mut);margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stat{font-size:14px;color:var(--mut)}
+.links a,.chip{display:inline-block;padding:5px 11px;margin:3px 6px 3px 0;border:1px solid var(--bd);border-radius:20px;font-size:14px;color:var(--ac);text-decoration:none;background:var(--card)}
+.links a:hover{background:var(--soft)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.d{padding:8px 0;text-align:center;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);cursor:pointer;font:inherit;font-size:14px}
+.d.done{background:var(--ok);color:#fff;border-color:var(--ok)}
+.d.sel{outline:2px solid var(--ac)}
+h2{font-size:20px;margin:0 0 4px}
+.tag{font-size:12px;color:var(--ac);background:var(--soft);padding:2px 8px;border-radius:10px}
+ul{padding-left:20px;margin:6px 0}
+li{margin:4px 0}
+li label{cursor:pointer}
+textarea{width:100%;min-height:80px;border:1px solid var(--bd);border-radius:8px;padding:8px;background:var(--bg);color:var(--tx);font:inherit}
+button.p{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+button.g{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:9px 16px;font:inherit;cursor:pointer}
+h3{font-size:16px;margin:14px 0 4px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>DSA in 30 Days</h1>
+<p class="sub">One place for the plan, free resources, practice problems and progress tracking.</p>
+
+<div class="card">
+<div class="row"><b id="pt">0 / 30 days done</b><span class="stat" id="ps"></span></div>
+<div class="bar"><i id="pb"></i></div>
+<div class="grid" id="grid"></div>
+</div>
+
+<div class="card" id="day"></div>
+
+<div class="card">
+<h2>Core resources</h2>
+<p class="sub" style="margin-bottom:6px">Free, well-known places to learn and practice.</p>
+<div class="links">
+<a href="https://neetcode.io/roadmap" target="_blank" rel="noopener">NeetCode roadmap</a>
+<a href="https://visualgo.net" target="_blank" rel="noopener">VisuAlgo (visualize)</a>
+<a href="https://leetcode.com/problemset/" target="_blank" rel="noopener">LeetCode</a>
+<a href="https://www.geeksforgeeks.org/dsa/dsa-tutorial-learn-data-structures-and-algorithms/" target="_blank" rel="noopener">GeeksforGeeks DSA</a>
+<a href="https://www.youtube.com/results?search_query=DSA+full+course" target="_blank" rel="noopener">YouTube: DSA courses</a>
+<a href="https://www.youtube.com/results?search_query=striver+dsa" target="_blank" rel="noopener">YouTube: Striver</a>
+<a href="https://www.youtube.com/results?search_query=neetcode" target="_blank" rel="noopener">YouTube: NeetCode</a>
+<a href="https://www.youtube.com/results?search_query=abdul+bari+algorithms" target="_blank" rel="noopener">YouTube: Abdul Bari</a>
+<a href="https://www.youtube.com/results?search_query=love+babbar+dsa" target="_blank" rel="noopener">YouTube: Love Babbar</a>
+<a href="https://codeforces.com/problemset" target="_blank" rel="noopener">Codeforces</a>
+</div>
+<h3>Daily routine (about 3-4 hours)</h3>
+<ul>
+<li>45 min: watch the topic video, take short notes</li>
+<li>90 min: solve the listed problems yourself first, then read solutions</li>
+<li>30 min: re-solve one old problem without help</li>
+<li>Every 7th day: revision and a timed mock, no new topics</li>
+</ul>
+</div>
+
+<div class="card">
+<div class="row" style="justify-content:space-between"><b>Reset progress</b><button class="g" id="rs">Reset</button></div>
+</div>
+</div>
+
+<script>
+var P=[
+["Introduction to DSA","What a data structure is (a way to store data) and what an algorithm is (steps to solve a problem). Why DSA matters for interviews and for writing fast code. How memory works: variables, addresses, stack vs heap. Pick ONE language (C++, Java or Python) and stick with it for 30 days.",["Watch: an introduction to DSA video and note the difference between data structure and algorithm","Install: your language compiler or IDE and run a Hello World program","Write: a one-page note on what DSA is in your own words","Create: free accounts on LeetCode and GitHub"]],
+["Programming basics","Variables, data types, input and output, if/else, loops (for, while), functions, and basic patterns. If you already know these, finish this day quickly.",["Write: a program to check if a number is prime","Write: a program to print the Fibonacci series using a loop","Write: a function to reverse a number","Solve: Palindrome Number on LeetCode"]],
+["Big-O complexity","Why we measure speed as input grows. Time complexity vs space complexity. O(1), O(log n), O(n), O(n log n), O(n^2). How to count loops to find complexity.",["Watch: a Big-O notation video and write the common complexities in your notes","Write: the time complexity of 5 small loops you create yourself","Solve: Two Sum with brute force, then note its complexity"]],
+["Arrays I","What an array is, how it sits in memory, access by index, insert and delete costs, static vs dynamic arrays (vector, ArrayList, list).",["Find Numbers with Even Number of Digits","Remove Duplicates from Sorted Array","Move Zeroes","Merge Sorted Array"]],
+["Arrays II","Prefix sums, Kadane algorithm, rotating and reversing, subarray problems.",["Rotate Array","Maximum Subarray","Product of Array Except Self","Subarray Sum Equals K"]],
+["Strings","Strings as character arrays, immutability, common operations, palindromes, character frequency counting.",["Valid Palindrome","Valid Anagram","Longest Common Prefix","Reverse Words in a String"]],
+["Revision and mock 1","Redo days 1-6. Re-solve the problems you got wrong, then a timed 60 minute set.",["Pick 3 unsolved Easy problems on arrays and strings and solve them with a timer"]],
+["Hashing","HashMap and HashSet: key-value storage, O(1) average lookup, frequency counting, grouping.",["Contains Duplicate","Group Anagrams","Top K Frequent Elements","Longest Consecutive Sequence"]],
+["Two pointers","Opposite-end and same-direction pointers on sorted arrays and strings.",["Two Sum II","3Sum","Container With Most Water","Trapping Rain Water"]],
+["Sliding window","Fixed and variable size windows for subarrays and substrings.",["Best Time to Buy and Sell Stock","Longest Substring Without Repeating Characters","Maximum Average Subarray I","Minimum Window Substring"]],
+["Recursion","A function calling itself: base case, recursive case, call stack, recursion tree.",["Fibonacci Number","Power of Two","Pow(x, n)","Reverse String"]],
+["Linked list I","Nodes and pointers, singly vs doubly linked list, insert, delete, traverse, reverse.",["Reverse Linked List","Merge Two Sorted Lists","Remove Nth Node From End of List","Delete Node in a Linked List"]],
+["Linked list II","Fast and slow pointer technique, cycle detection, finding the middle.",["Linked List Cycle","Middle of the Linked List","Palindrome Linked List","Add Two Numbers"]],
+["Stack","LIFO structure, push and pop, bracket matching, expression evaluation.",["Valid Parentheses","Min Stack","Evaluate Reverse Polish Notation","Backspace String Compare"]],
+["Revision and mock 2","Redo days 8-13. Re-solve wrong problems, then a timed 90 minute set.",["Pick 3 unsolved Medium problems on hashing, windows and linked lists"]],
+["Queue and monotonic stack","FIFO structure, deque, circular queue, next greater element pattern.",["Implement Queue using Stacks","Number of Recent Calls","Daily Temperatures","Next Greater Element I"]],
+["Binary search","Searching a sorted array in O(log n), and binary search on the answer.",["Binary Search","Search Insert Position","Search in Rotated Sorted Array","Koko Eating Bananas"]],
+["Sorting","Bubble, selection, insertion, merge and quick sort. Know the complexity and stability of each.",["Sort an Array","Merge Intervals","Sort Colors","Kth Largest Element in an Array"]],
+["Trees basics","Tree terms (root, leaf, height), binary tree, inorder, preorder, postorder and level order traversals.",["Binary Tree Inorder Traversal","Maximum Depth of Binary Tree","Binary Tree Level Order Traversal","Symmetric Tree"]],
+["Trees and BST","Diameter, balanced tree, lowest common ancestor, and the binary search tree property.",["Diameter of Binary Tree","Invert Binary Tree","Validate Binary Search Tree","Lowest Common Ancestor of a Binary Search Tree"]],
+["Revision and mock 3","Redo days 15-20. Re-solve wrong problems, then a timed 90 minute set.",["Pick 3 unsolved Medium problems on stacks, binary search and trees"]],
+["Heap and priority queue","Min heap and max heap, insert and extract, top K patterns.",["Last Stone Weight","Kth Largest Element in a Stream","Merge k Sorted Lists","Find Median from Data Stream"]],
+["Graph basics","Nodes and edges, adjacency list, BFS, DFS, connected components.",["Number of Islands","Flood Fill","Clone Graph","Rotting Oranges"]],
+["Graph algorithms","Topological sort, cycle detection, shortest path with Dijkstra.",["Course Schedule","Course Schedule II","Network Delay Time","Find if Path Exists in Graph"]],
+["Backtracking","Choose, explore, undo. Subsets, permutations, combinations.",["Subsets","Permutations","Combination Sum","N-Queens"]],
+["Dynamic programming I","Overlapping subproblems, memoization, tabulation, 1D DP.",["Climbing Stairs","House Robber","Coin Change","Longest Increasing Subsequence"]],
+["Dynamic programming II","2D DP, knapsack, LCS, grid paths.",["Unique Paths","Longest Common Subsequence","Partition Equal Subset Sum","Edit Distance"]],
+["Greedy and bits","Greedy choice reasoning and bit manipulation tricks.",["Jump Game","Gas Station","Single Number","Number of 1 Bits"]],
+["Trie and Union-Find","Prefix tree for words, and disjoint set union for connectivity.",["Implement Trie (Prefix Tree)","Number of Provinces","Redundant Connection","Graph Valid Tree"]],
+["Final mock and review","One full timed mock, then review weak topics and your notes.",["Solve 4 mixed problems in 2 hours, then list your 5 weakest topics"]]
+];
+var st={done:{},notes:{},chk:{}},cur=0;
+function load(){try{var r=localStorage.getItem("dsa30");if(r)st=JSON.parse(r)}catch(e){}
+st.done=st.done||{};st.notes=st.notes||{};st.chk=st.chk||{}}
+function save(){try{localStorage.setItem("dsa30",JSON.stringify(st))}catch(e){}}
+function q(s){return encodeURIComponent(s)}
+function grid(){var g=document.getElementById("grid");g.innerHTML="";
+for(var i=0;i<30;i++){(function(i){var b=document.createElement("button");b.className="d"+(st.done[i]?" done":"")+(i===cur?" sel":"");b.textContent=i+1;b.onclick=function(){cur=i;render()};g.appendChild(b)})(i)}
+var n=Object.keys(st.done).filter(function(k){return st.done[k]}).length;
+document.getElementById("pt").textContent=n+" / 30 days done";
+document.getElementById("pb").style.width=(n/30*100)+"%";
+document.getElementById("ps").textContent=n===30?"All done. Great work!":(30-n)+" days to go"}
+function render(){var p=P[cur],h="";
+h+='<div class="row"><h2>Day '+(cur+1)+': '+p[0]+'</h2><span class="tag">'+(cur<7?"Week 1":cur<14?"Week 2":cur<21?"Week 3":"Week 4")+'</span></div>';
+h+='<p class="sub">'+p[1]+'</p>';
+h+='<h3>Learn</h3><div class="links">'
++'<a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+q(p[0]+" DSA tutorial")+'">YouTube videos</a>'
++'<a target="_blank" rel="noopener" href="https://www.google.com/search?q='+q("geeksforgeeks "+p[0]+" data structures algorithms")+'">GeeksforGeeks article</a>'
++'<a target="_blank" rel="noopener" href="https://www.google.com/search?q='+q("visualgo OR visualization "+p[0])+'">Visualize it</a></div>';
+h+='<h3>Practice</h3><ul>';
+p[2].forEach(function(t,j){var k=cur+"-"+j,u="https://leetcode.com/problemset/?search="+q(t);
+h+='<li><label><input type="checkbox" data-k="'+k+'"'+(st.chk[k]?" checked":"")+'> '+t+'</label> '+(t.length<60&&!/^(Pick|Set|Redo|Solve|Read|Watch|Write|Install|Create)/.test(t)?'<a target="_blank" rel="noopener" href="'+u+'">open</a>':'')+'</li>'});
+h+='</ul><h3>My notes</h3><textarea id="nt" placeholder="Key ideas, mistakes, patterns to remember...">'+(st.notes[cur]||"").replace(/</g,"&lt;")+'</textarea>';
+h+='<div class="row" style="margin-top:10px"><button class="p" id="md">'+(st.done[cur]?"Mark as not done":"Mark day complete")+'</button>'
++'<button class="g" id="pv">Previous</button><button class="g" id="nx">Next</button></div>';
+var el=document.getElementById("day");el.innerHTML=h;
+el.querySelectorAll("input[type=checkbox]").forEach(function(c){c.onchange=function(){st.chk[c.dataset.k]=c.checked;save()}});
+document.getElementById("nt").oninput=function(e){st.notes[cur]=e.target.value;save()};
+document.getElementById("md").onclick=function(){st.done[cur]=!st.done[cur];save();render()};
+document.getElementById("pv").onclick=function(){if(cur>0){cur--;render()}};
+document.getElementById("nx").onclick=function(){if(cur<29){cur++;render()}};
+grid()}
+document.getElementById("rs").onclick=function(){if(confirm("Reset all progress and notes?")){st={done:{},notes:{},chk:{}};save();cur=0;render()}};
+load();
+for(var i=0;i<30;i++){if(!st.done[i]){cur=i;break}}
+render();
+</script>
+</body>
+</html>
